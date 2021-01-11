@@ -11,7 +11,6 @@ import "firebase/storage";
 firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
 const storageRef = storage.ref();
-const rootRef = storageRef.root;
 
 export default function App() {
 	const [files, setFiles] = useState([]);
@@ -29,6 +28,9 @@ export default function App() {
 			<NavBar />
 
 			<hr className="separation" />
+			<div className="centered">
+				Decrypted Lecture Notes CS4401 :D, no password, bas sir ko mat batana priya sahpathiyo evam mitro
+			</div>
 			<div className="link_container">
 				{files.map((value, index) => (
 					<PDFDown

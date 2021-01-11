@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, white, lightblue, lightseagreen);
+    height: 100vh;
+}
+
+header {
+    background-color: lightseagreen;
+    color: white;
+    margin-bottom: 1rem;
+    padding: 0.1rem;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input {
+    margin-right: 1.8vw;
+}
+
+input, select {
+    border: none;
+    width: 20vw;
+    border-bottom: 0.5vh solid blue;
+    padding: 2% 4%;
+    transition: 0.5s;
+}
+
+@media screen and (max-width: 768px) and (orientation: portrait) {
+    input, select {
+        width: 27vw;
+        margin-left: 0;
+    }
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+button {
+    border: 0;
+    padding: 1%;
+    margin: 1%;
+}
+
+/* just for reference, replace later */
+.head_title {
+    text-align: center;
+    text-emphasis: strong;
+}
+
+.head_subtitle {
+    text-align: center;
+}
+
+.separation {
+    width: 80%;
+}
+
+.centered {
+    text-align: center;
+}
+
+.link_container {
+    padding: 2%;
+}

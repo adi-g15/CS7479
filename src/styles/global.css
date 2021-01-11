@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, white, lightblue, lightseagreen);
+    background: linear-gradient(to bottom, white, lightblue, lightseagreen) fixed;
     height: 100vh;
 }
 
@@ -39,6 +39,11 @@ input, select {
         overflow-x: auto;
         white-space: nowrap;
     }
+}
+
+td {
+    margin-left: 1%;
+    margin-right: 1%;
 }
 
 input::-webkit-outer-spin-button,

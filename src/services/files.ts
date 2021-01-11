@@ -5,7 +5,8 @@ export function GetListService(storageRef: firebase.storage.Reference) {
                 return resolve(result.items.map(item => {
                     return({
                         name: item.name,
-                        link: item.getDownloadURL()
+                        link: item.getDownloadURL(),
+                        meta: item.getMetadata()
                     });
                 }));
             });

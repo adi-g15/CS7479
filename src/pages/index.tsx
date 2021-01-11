@@ -16,6 +16,13 @@ export default function App() {
 	const [files, setFiles] = useState([]);
 
 	useEffect(() => {
+		storageRef.root.listAll().then(result => {
+			result.items.forEach(item => {
+				item.getMetadata().then(metadata => {
+					console.log()
+				})
+			})
+		})
 		GetListService(storageRef).then(storedFiles => {
 			console.debug(storedFiles);
 			setFiles(storedFiles);
@@ -31,16 +38,22 @@ export default function App() {
 			<div className="centered">
 				Decrypted Lecture Notes CS4401 :D, no password, bas sir ko mat batana priya sahpathiyo evam mitro
 			</div>
+			<hr className="separation" />
+			<br />
 			<div className="link_container">
-				{files.map((value, index) => (
-					<PDFDown
-						name={value.name}
-						linkPromise={value.link}
-						size={value.size}
-						key={index}
-					/>
-				)
-				)}
+				<table>
+					<tbody>
+					{files.map((value, index) => (
+						<PDFDown
+							name={value.name}
+							linkPromise={value.link}
+							metaPromise={value.meta}
+							key={index}
+						/>
+					)
+					)}
+					</tbody>
+				</table>
 			</div>
 		</>
 	);

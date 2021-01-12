@@ -18,7 +18,7 @@ export default function App() {
 	const [zipSize, setZipSize] = useState(0);
 
 	useEffect(() => {
-		GetListService(storageRef).then(data => {
+		GetListService(storageRef.child("cs4401/")).then(data => {
 			console.debug(data);
 
 			setFiles(data.storedFiles);

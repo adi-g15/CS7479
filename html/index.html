@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decrypted CS4401</title>
+</head>
+<body>
+    <header class="centered">
+        <h1>
+            Decrypted CS4401
+        </h1>
+    </header>
+    
+    <hr class="separation" />
+    <div class="centered">
+        Decrypted Lecture Notes CS4401 :D, no password
+    </div>
+    <hr class="separation" />
+    <br />
+    <div class="link_container">
+    <div><button
+        class="zip_btn"
+        id="zip_btn"
+        onclick="handleZipClick"
+        disabled
+    >
+        <a download id="zip_anchor" href="?" style="color: inherit; text-decoration: none;">
+            Download All as ZIP
+        </a>
+        <p>
+            { "( " + Math.round(zipSize/1000) + ' KB )'}
+        </p>
+    </button></div>
+
+        <table>
+            <tbody>
+            {files.map((value, index) => (
+                <PDFDown
+                    name={value.name}
+                    linkPromise={value.link}
+                    metaPromise={value.meta}
+                    key={index}
+                />
+            )
+            )}
+            </tbody>
+        </table>
+    </div>
+    <script src="index.js" />
+</body>
+</html>

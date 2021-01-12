@@ -16,13 +16,7 @@ export default function App() {
 	const [files, setFiles] = useState([]);
 
 	useEffect(() => {
-		storageRef.root.listAll().then(result => {
-			result.items.forEach(item => {
-				item.getMetadata().then(metadata => {
-					console.log()
-				})
-			})
-		})
+		
 		GetListService(storageRef).then(storedFiles => {
 			console.debug(storedFiles);
 			setFiles(storedFiles);
@@ -36,7 +30,7 @@ export default function App() {
 
 			<hr className="separation" />
 			<div className="centered">
-				Decrypted Lecture Notes CS4401 :D, no password, bas sir ko mat batana priya sahpathiyo evam mitro
+				Decrypted Lecture Notes CS4401 :D, no password
 			</div>
 			<hr className="separation" />
 			<br />

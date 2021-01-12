@@ -1,0 +1,6 @@
+{
+    "hosting": {
+      "site": "nitp-notes",
+      "public": "public"
+    }
+  }

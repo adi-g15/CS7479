@@ -17,6 +17,10 @@ table {
     margin-right: auto;
 }
 
+tr {
+    transition: linear 0.5s;
+}
+
 input {
     margin-right: 1.8vw;
 }
@@ -82,4 +86,8 @@ button {
 
 .link_container {
     padding: 2%;
+}
+
+.zip_link {
+    width: 80%;
 }

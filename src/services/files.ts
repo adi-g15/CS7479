@@ -1,7 +1,8 @@
 export function GetListService(storageRef: firebase.storage.Reference) {
     return new Promise((resolve, reject) => {
         try{
-            storageRef.root.listAll().then(result => {
+            storageRef.listAll().then(result => {
+                console.debug("Received: ", result.items);
                 const zippedFile = result.items.find(item => item.name.endsWith('zip'));
 
                 return resolve({

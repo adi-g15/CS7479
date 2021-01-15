@@ -16,7 +16,7 @@ export default function PdfDown(props: PdfProps) {
             anchorRef.current.setAttribute("href", url);
         })
         props.metaPromise.then(metadata => {
-            sizeRef.current.innerText = metadata.size/1000 + ' KB';
+            sizeRef.current.innerText = Math.round(metadata.size/1000) + ' KB';
         })
     }, []);
 

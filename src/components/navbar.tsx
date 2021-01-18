@@ -1,11 +1,15 @@
 import React from 'react';
 import "../styles/global.css";
 
-export default function NavBar() {
+interface NavbarProps {
+	title: string
+};
+
+export default function NavBar(props: NavbarProps) {
 	return (
 		<header className="centered">
 			<h1>
-				Decrypted CS4401
+				{props.title}
 			</h1>
 		</header>
 	);

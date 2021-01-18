@@ -1,4 +1,19 @@
-export function GetListService(storageRef: firebase.storage.Reference) {
+interface FileList {
+    storedFiles: Array<{
+        name: string,
+        link: Promise<string>,
+        meta: Promise<Object>
+    }>,
+    zipped?: {
+        link: Promise<string>,
+        meta: Promise<{
+            size: number,
+            timeCreated: string
+        }>
+    }
+}
+
+export function GetListService(storageRef: firebase.storage.Reference): Promise<FileList> {
     return new Promise((resolve, reject) => {
         try{
             storageRef.listAll().then(result => {

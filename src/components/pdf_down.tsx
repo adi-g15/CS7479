@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import byteSize from "byte-size";
 import "../styles/pdf_down.css";
 
 interface PdfProps {
@@ -16,7 +17,7 @@ export default function PdfDown(props: PdfProps) {
             anchorRef.current.setAttribute("href", url);
         })
         props.metaPromise.then(metadata => {
-            sizeRef.current.innerText = Math.round(metadata.size/1000) + ' KB';
+            sizeRef.current.innerText = byteSize(metadata.size).toString();
         })
     }, []);
 

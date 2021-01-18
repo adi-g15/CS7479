@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import NavBar from "./navbar";
 import PDFDown from "./pdf_down";
 import byteSize from "byte-size";
-import {GetListService} from "../services/files"; 
+import {GetListService} from "../services/files";
+import DataGrid from "@material-ui/data-grid";
 
 import firebase from "firebase/app";
 import firebaseConfig from "../config/firebase";
@@ -22,6 +23,7 @@ export default function ContentPage(props: ContentProps) {
 	const [files, setFiles] = useState([]);
 	const [zipLink, setZipLink] = useState('?');
 	const [zipSize, setZipSize] = useState(0);
+	const [selectOn, setSelect] = useState(false);
 
 	useEffect(() => {
 		GetListService(storageRef.child(props.dirPath)).then(data => {
@@ -66,6 +68,13 @@ export default function ContentPage(props: ContentProps) {
 			</button></div>
 
 				<table>
+					<thead>
+						<tr>
+							{selectOn && (<td>Select</td>)}
+							<td>Name</td>
+							<td>Size</td>
+						</tr>
+					</thead>
 					<tbody>
 					{files.map((value, index) => (
 						<PDFDown
@@ -73,6 +82,7 @@ export default function ContentPage(props: ContentProps) {
 							linkPromise={value.link}
 							metaPromise={value.meta}
 							key={index}
+							selectOn={selectOn}
 						/>
 					)
 					)}

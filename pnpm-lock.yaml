@@ -1,4 +1,5 @@
 dependencies:
+  '@material-ui/data-grid': 4.0.0-alpha.17_react@17.0.1
   byte-size: 7.0.0
   firebase: 8.2.3
   gatsby: 2.30.2_react-dom@17.0.1+react@17.0.1
@@ -1624,6 +1625,35 @@ packages:
       node: '>= 8.3'
     resolution:
       integrity: sha512-OXD0RgQ86Tu3MazKo8bnrkDRaDXXMGUqd+kTtLtK1Zb7CRzQcaSRPPPV37SvYTdevXEBVxe0HXylEjs8ibkmCw==
+  /@material-ui/data-grid/4.0.0-alpha.17_react@17.0.1:
+    dependencies:
+      '@material-ui/utils': 5.0.0-alpha.23_react@17.0.1
+      prop-types: 15.7.2
+      react: 17.0.1
+      reselect: 4.0.0
+    dev: false
+    engines:
+      node: '>=10.0.0'
+    peerDependencies:
+      '@material-ui/core': ^4.9.12
+      react: ^16.8.0 || ^17.0.0
+    resolution:
+      integrity: sha512-eqZ/H7jxl3UhVdz1H4OV5D7ZjXpnyg7mHZ4L92kp6qL2O820q2U482RGqyzrlFQCkDezAKqRUnn0iav7tUPDlQ==
+  /@material-ui/utils/5.0.0-alpha.23_react@17.0.1:
+    dependencies:
+      '@babel/runtime': 7.12.5
+      '@types/prop-types': 15.7.3
+      '@types/react-is': 17.0.0
+      prop-types: 15.7.2
+      react: 17.0.1
+      react-is: 17.0.1
+    dev: false
+    engines:
+      node: '>=10.0.0'
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0
+    resolution:
+      integrity: sha512-ZpvVFcBM+PaTn/+K7no5wTC9awMZiifZCM1rwGEwrJ3QL78csK2g5wKQBvJy2I5bdYnmtsZd0I/GKdMoJY0Ltw==
   /@mdx-js/util/2.0.0-next.8:
     dev: false
     resolution:
@@ -1963,6 +1993,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-RHYataCUPQnt+GHoASyRLq6wmZ0n8jWlBW8Lxcwd30NN6vQfbmTeoSDfkgxO0S1lEzArp8OFDsq5KIs7FygjtA==
+  /@types/react-is/17.0.0:
+    dependencies:
+      '@types/react': 17.0.0
+    dev: false
+    resolution:
+      integrity: sha512-A0DQ1YWZ0RG2+PV7neAotNCIh8gZ3z7tQnDJyS2xRPDNtAtSPcJ9YyfMP8be36Ha0kQRzbZCrrTMznA4blqO5g==
   /@types/react/17.0.0:
     dependencies:
       '@types/prop-types': 15.7.3
@@ -10251,6 +10287,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+  /react-is/17.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
   /react-lifecycles-compat/3.0.4:
     dev: false
     resolution:
@@ -10564,6 +10604,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
+  /reselect/4.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-qUgANli03jjAyGlnbYVAV5vvnOmJnODyABz51RdBN7M4WaVu8mecZWgyQNkG8Yqe3KRGRt0l4K4B3XVEULC4CA==
   /resolve-cwd/2.0.0:
     dependencies:
       resolve-from: 3.0.0
@@ -12830,6 +12874,7 @@ packages:
     resolution:
       integrity: sha512-y7bsTXqL+YMJQ2De2CBtSftJNLQnB7gWIzzKm10GDyC8Fg4Dsmd2LG5YhT8pudvUiuotic80WVXt/g1femRVQg==
 specifiers:
+  '@material-ui/data-grid': ^4.0.0-alpha.17
   byte-size: ^7.0.0
   firebase: ^8.2.1
   gatsby: ^2.30.1

@@ -5,7 +5,9 @@ import "../styles/pdf_down.css";
 interface PdfProps {
     name: string,
     linkPromise: Promise<string>,
-    metaPromise: Promise<any>
+    metaPromise: Promise<any>,
+    selectOn: boolean,
+    selectNotify?: Function
 };
 
 export default function PdfDown(props: PdfProps) {
@@ -23,11 +25,15 @@ export default function PdfDown(props: PdfProps) {
 
     return (
         <tr className="pdf_down">
-            <td>
+            {props.selectOn && (
+                <td>
+                    <input type="" />
+                </td>)}
+            {/* <td>
                 <span className="download_logo">
                     ⏬
                 </span>
-            </td>
+            </td> */}
             <td>
                 <span className="pdf_name">
                     <a ref={anchorRef} download href={"?"}>

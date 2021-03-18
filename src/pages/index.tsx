@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from "../components/navbar";
 import PDFDown from "../components/pdf_down";
-import byteSize from "byte-size";
 import {GetListService} from "../services/files";
 import "../styles/global.css";
+import UnitZip from "../components/unitzip";
 
 import firebase from "firebase/app";
 import firebaseConfig from "../config/firebase";
@@ -20,19 +20,25 @@ const storageRef = storage.ref();
 
 export default function CS4401() {
 	const [files, setFiles] = useState([]);
-	const [zipLink, setZipLink] = useState('?');
-	const [zipSize, setZipSize] = useState(0);
+	const [allZipLink, setZipLink] = useState('?');
+	const [allZipSize, setZipSize] = useState(0);
+	const [allZip, setZip] = useState(null);
+	const [unitZips, setUnitZips] = useState([]);
 	const [selectOn, setSelect] = useState(false);
 
 	useEffect(() => {
 		GetListService(storageRef.child("cs4401/")).then(data => {
 			console.debug(data);
 
-			setFiles(data.storedFiles);
-			if(data.zipped) {
-				data.zipped.link.then(link => setZipLink(link));
-				data.zipped.meta.then(metadata => setZipSize(metadata.size));
+			const all_zip = data.zipped.find(zip => !zip.name.startsWith('Unit'));
+			setZip(all_zip);
+			if(all_zip) {
+				all_zip.link.then(link => setZipLink(link));
+				all_zip.meta.then(metadata => setZipSize(metadata.size));
 			}
+
+			setUnitZips(data.zipped.filter(zip => zip.name.startsWith('Unit')));
+			setFiles(data.storedFiles);
 		})
 	}, []);
 
@@ -47,24 +53,15 @@ export default function CS4401() {
 			</div>
 			<hr className="separation" />
 			<br />
-			<div className="link_container">
-			<div><button
-				style={{
-					backgroundColor: '#20b2aa30',
-					width: '80%',
-					marginLeft: '10%',
-					borderRadius: '10px'
-				}}
-				onClick={() => document.getElementById("zip_anchor").click()}
-				disabled={zipLink === '?'}
-			>
-				<a download id="zip_anchor" href={zipLink} style={{color: 'inherit', textDecoration: 'none'}}>
-					Download All as ZIP
-				</a>
-				<p>
-					{ `( ${byteSize(zipSize).toString()} )`}
-				</p>
-			</button></div>
+			<div className="container">
+				<div className="unit_container">
+					{
+						[( allZip && <UnitZip key={0} gridWidth={[1,3]} name={"Download All as ZIP"} linkPromise={allZip.link} metaPromise={allZip.meta} />)]
+							.concat(unitZips.map((zip, index) => (
+								<UnitZip key={index+1} name={zip.name} linkPromise={zip.link} metaPromise={zip.meta} />
+							)))
+					}
+				</div>
 
 				<table>
 					<thead>

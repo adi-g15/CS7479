@@ -4,13 +4,14 @@ interface FileList {
         link: Promise<string>,
         meta: Promise<Object>
     }>,
-    zipped?: {
+    zipped: Array<{
+        name: string,
         link: Promise<string>,
         meta: Promise<{
             size: number,
             timeCreated: string
         }>
-    }
+    }>
 }
 
 export function GetListService(storageRef: firebase.storage.Reference): Promise<FileList> {
@@ -18,7 +19,15 @@ export function GetListService(storageRef: firebase.storage.Reference): Promise<
         try{
             storageRef.listAll().then(result => {
                 console.debug("Received: ", result.items);
-                const zippedFile = result.items.find(item => item.name.endsWith('zip'));
+                const today = new Date();
+                const date = `${today.getDate()}_${today.getMonth() + 1}_${today.getFullYear() % 100}`;
+                const zippedFiles = result.items.filter(item => item.name.endsWith('zip')).map(zip_file => {
+                    return ({
+                        name: zip_file.name.startsWith('CS4401_COA_Unit_') ? zip_file.name.slice('CS4401_COA_'.length): 'Download All as zip',
+                        link: zip_file.getDownloadURL(),
+                        meta: zip_file.getMetadata()
+                    })
+                });
 
                 return resolve({
                     storedFiles: result.items.filter(item => item.name.endsWith('.pdf')).map(item => {
@@ -28,10 +37,7 @@ export function GetListService(storageRef: firebase.storage.Reference): Promise<
                                 meta: item.getMetadata()
                             });
                         }),
-                    zipped: zippedFile ? ({
-                        link: zippedFile.getDownloadURL(),
-                        meta: zippedFile.getMetadata()
-                    }) : null
+                    zipped: zippedFiles
                 });
             });
         } catch {

@@ -36,7 +36,7 @@ export default function PdfDown(props: PdfProps) {
             </td> */}
             <td>
                 <span className="pdf_name">
-                    <a ref={anchorRef} download href={"?"}>
+                    <a ref={anchorRef} download href={"#"}>
                         {props.name}
                     </a>
                 </span>

@@ -18,7 +18,7 @@ table {
 }
 
 tr {
-    transition: linear 0.5s;
+    transition: linear 5s;
 }
 
 input {
@@ -85,10 +85,41 @@ button {
     text-align: center;
 }
 
-.link_container {
+.container {
     padding: 2%;
 }
 
 .zip_link {
     width: 80%;
+}
+
+.unit_container {
+    display: grid;
+    margin-left: 10%;
+    width: 80%;
+    grid-gap: 10px 5px;
+    margin-bottom: 5vh;
+}
+
+.unit_zip {
+    background-color: #20b2aa30;
+    margin-left: '10%';
+    border-radius: '10px';
+    border-radius: 10px;
+    width: 100%;
+}
+
+.unit_zip > button {
+    background: transparent;
+    text-decoration: none;
+    border: 0;
+    padding: 1%;
+    margin: 1%;
+    width: 100%;
+    cursor: pointer;
+}
+
+.unit_zip > button > a {
+    color: inherit;
+    text-decoration: none;
 }

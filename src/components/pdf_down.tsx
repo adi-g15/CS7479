@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import byteSize from "byte-size";
 import "../styles/pdf_down.css";
 
@@ -11,16 +11,12 @@ interface PdfProps {
 };
 
 export default function PdfDown(props: PdfProps) {
-    const anchorRef = useRef(null);
-    const sizeRef = useRef(null);
+    const [link, setLink] = useState(null);
+    const [size, setSize] = useState(0);
 
     useEffect(() => {
-        props.linkPromise.then(url => {
-            anchorRef.current.setAttribute("href", url);
-        })
-        props.metaPromise.then(metadata => {
-            sizeRef.current.innerText = byteSize(metadata.size).toString();
-        })
+        props.linkPromise.then(url => setLink(url))
+        props.metaPromise.then(meta => setSize(byteSize(meta.size)));
     }, []);
 
     return (
@@ -36,13 +32,13 @@ export default function PdfDown(props: PdfProps) {
             </td> */}
             <td>
                 <span className="pdf_name">
-                    <a ref={anchorRef} download href={"#"}>
+                    <a download href={link}>
                         {props.name}
                     </a>
                 </span>
             </td>
             <td>
-                <p ref={sizeRef} />
+                <p>{size.toString()}</p>
             </td>
         </tr>
     )

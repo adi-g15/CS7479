@@ -9,7 +9,8 @@ interface FileList {
         link: Promise<string>,
         meta: Promise<{
             size: number,
-            timeCreated: string
+            timeCreated: string,
+            updated: string
         }>
     }>
 }

@@ -12,6 +12,12 @@ header {
     padding: 0.1rem;
 }
 
+footer {
+    color: white;
+    margin-top: 1rem;
+    padding: 0.1rem;
+}
+
 table {
     margin-left: auto;
     margin-right: auto;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from "../components/navbar";
+import Footer from "../components/footer";
 import PDFDown from "../components/pdf_down";
 import {GetListService} from "../services/files";
 import "../styles/global.css";
@@ -20,11 +21,10 @@ const storageRef = storage.ref();
 
 export default function CS4401() {
 	const [files, setFiles] = useState([]);
-	const [allZipLink, setZipLink] = useState('?');
-	const [allZipSize, setZipSize] = useState(0);
 	const [allZip, setZip] = useState(null);
 	const [unitZips, setUnitZips] = useState([]);
 	const [selectOn, setSelect] = useState(false);
+	const [updated_time, setUpdatedTime] = useState(null);
 
 	useEffect(() => {
 		GetListService(storageRef.child("cs4401/")).then(data => {
@@ -32,10 +32,11 @@ export default function CS4401() {
 
 			const all_zip = data.zipped.find(zip => !zip.name.startsWith('Unit'));
 			setZip(all_zip);
-			if(all_zip) {
-				all_zip.link.then(link => setZipLink(link));
-				all_zip.meta.then(metadata => setZipSize(metadata.size));
-			}
+
+			all_zip.meta.then(meta => {
+				const today = new Date(Date.parse(meta.updated));
+				setUpdatedTime( today.toLocaleString() ); 
+			});
 
 			setUnitZips(data.zipped.filter(zip => zip.name.startsWith('Unit')));
 			setFiles(data.storedFiles);
@@ -85,6 +86,7 @@ export default function CS4401() {
 					</tbody>
 				</table>
 			</div>
+			<Footer msg={`Updated: ${updated_time}`}/>
 		</>
 	);
 }

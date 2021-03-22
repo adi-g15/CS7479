@@ -8,7 +8,12 @@ interface FooterProps {
 export default function NavBar(props: FooterProps) {
 	return (
 		<footer className="centered">
-			{props.msg}
+			<div style={{padding: '5px', fontSize: 'large'}}>
+				<a href="https://drive.google.com/drive/folders/1oGKKT1DVB__792WIMvARUSFJkUqy2jWu?usp=sharing">Original Drive Link</a>
+			</div>
+			<div>
+				{props.msg}
+			</div>
 		</footer>
 	);
 }

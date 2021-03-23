@@ -42,7 +42,7 @@ export default function CS4401() {
 
 			all_zip.meta.then(meta => {
 				const today = new Date(Date.parse(meta.updated));
-				setUpdatedTime( today.toLocaleString() ); 
+				setUpdatedTime( today.toLocaleDateString() ); 
 			});
 
 			setUnitZips(data.zipped.filter(zip => zip.name.startsWith('Unit')));

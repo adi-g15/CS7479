@@ -25,13 +25,12 @@ export default function CS4401() {
 	const [unitZips, setUnitZips] = useState([]);
 	const [selectOn, setSelect] = useState(false);
 	const [updated_time, setUpdatedTime] = useState(null);
-	const [ascendingOrder, setAscendingOrder] = useState(true);
+	// const [ascendingOrder, setAscendingOrder] = useState(true);
 
-	console.log("Order is ", ascendingOrder);
-	if( ascendingOrder === true )
-		files.sort((a,b) => a.name === b.name ? 0: (a.name < b.name ? -1:1 ));
-	else if( ascendingOrder === false )
-		files.sort((a,b) => a.name === b.name ? 0: (a.name < b.name ? 1:-1 ));
+	// if( ascendingOrder === true )
+	// 	files.sort((a,b) => a.name === b.name ? 0: (a.name < b.name ? -1:1 ));
+	// else if( ascendingOrder === false )
+	// 	files.sort((a,b) => a.name === b.name ? 0: (a.name < b.name ? 1:-1 ));
 
 	useEffect(() => {
 		GetListService(storageRef.child("cs4401/")).then(data => {
@@ -75,9 +74,11 @@ export default function CS4401() {
 					<thead>
 						<tr>
 							{selectOn && (<td>Select</td>)}
-							<td style={{cursor: 'pointer'}} onClick={() => ascendingOrder === null ? setAscendingOrder(false): setAscendingOrder(order => !order) }>
+							<td style={{}/*{cursor: 'pointer'}*/}>
 								<span>Name</span>
-								<span style={{paddingLeft: '15px'}}>{ascendingOrder ? '👇': '👆'}</span>
+								{/* <span style={{paddingLeft: '15px'}}>{ascendingOrder ? '👇': '👆'}</span>
+								onClick={() => ascendingOrder === null ? setAscendingOrder(false): setAscendingOrder(order => !order) }>
+								*/}
 							</td>
 							<td>Size</td>
 						</tr>

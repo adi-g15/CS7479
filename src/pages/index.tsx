@@ -9,6 +9,7 @@ import UnitZip from "../components/unitzip";
 import firebase from "firebase/app";
 import firebaseConfig from "../config/firebase";
 import "firebase/storage";
+import dayjs from "dayjs";
 
 try{
 	firebase.initializeApp(firebaseConfig);
@@ -40,8 +41,8 @@ export default function CS4401() {
 			setZip(all_zip);
 
 			all_zip.meta.then(meta => {
-				const today = new Date(Date.parse(meta.updated));
-				setUpdatedTime( today.toLocaleDateString() ); 
+				console.debug("List Updated: ", meta.updated);
+				setUpdatedTime( dayjs(meta.updated).format('DD MMM YYYY') );
 			});
 
 			setUnitZips(data.zipped.filter(zip => zip.name.startsWith('Unit')));

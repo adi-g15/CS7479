@@ -11,8 +11,8 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
-    "@material-ui/data-grid": "^4.0.0-alpha.17",
     "byte-size": "^7.0.0",
+    "dayjs": "^1.8.36",
     "firebase": "^8.2.1",
     "gatsby": "^2.30.1",
     "react": "^17.0.1",

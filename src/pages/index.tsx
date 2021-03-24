@@ -10,6 +10,7 @@ import firebase from "firebase/app";
 import firebaseConfig from "../config/firebase";
 import "firebase/storage";
 import dayjs from "dayjs";
+import Helmet from "react-helmet";
 
 try{
 	firebase.initializeApp(firebaseConfig);
@@ -53,6 +54,15 @@ export default function CS4401() {
 	// <></> is a react fragement
 	return (
 		<>
+			<div className="application">
+				<Helmet>
+					<meta charSet="utf-8" />
+					<meta name="description" content="CS4401 bina password" />
+					<meta name="theme-color" content="#20b2aa" />
+					<meta name="lang" content="en" />
+					<title>Decrypted CS4401</title>
+				</Helmet>
+			</div>
 			<NavBar title="Decrypted CS4401"/>
 
 			<hr className="separation" />

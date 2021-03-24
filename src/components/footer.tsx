@@ -18,7 +18,6 @@ export default function NavBar(props: FooterProps) {
 						Original Drive Link
 					</a>
 				</button>
-				<a href=""></a>
 			</div>
 			<div>
 				{props.msg}

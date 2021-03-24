@@ -17,7 +17,7 @@ export default function PdfDown(props: PdfProps) {
     useEffect(() => {
         props.linkPromise.then(url => setLink(url))
         props.metaPromise.then(meta => setSize(byteSize(meta.size)));
-    }, []);
+    }, [props.name]);
 
     return (
         <tr className="pdf_down">
@@ -25,11 +25,6 @@ export default function PdfDown(props: PdfProps) {
                 <td>
                     <input type="" />
                 </td>)}
-            {/* <td>
-                <span className="download_logo">
-                    ⏬
-                </span>
-            </td> */}
             <td>
                 <span className="pdf_name">
                     <a download href={link}>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from "../components/navbar";
+import PDFDown from "../components/pdf_down";
 import byteSize from "byte-size";
 import {GetListService} from "../services/files";
-import { DataGrid } from "@material-ui/data-grid";
 
 import firebase from "firebase/app";
 import firebaseConfig from "../config/firebase";
@@ -18,31 +18,8 @@ interface ContentProps {
 	msg?: string	//if any (like "")
 };
 
-const tableHead = [
-    {
-        field: 'lecture_num',
-        headerName: 'Lecture',
-        type: 'number'
-    },
-    {
-        field: 'unit_num',
-        headerName: 'Unit',
-        type: 'number'
-    },
-    {
-        field: 'fileName',
-        headerName: 'FileName',
-        type: 'string'
-    },
-    {
-        field: 'size',
-        headerName: 'Size',
-        type: 'string'
-    }
-];
-
 export default function ContentPage(props: ContentProps) {
-	const [filesRows, setFiles] = useState([]);
+	const [files, setFiles] = useState([]);
 	const [zipLink, setZipLink] = useState('?');
 	const [zipSize, setZipSize] = useState(0);
 	const [selectOn, setSelect] = useState(false);
@@ -89,11 +66,7 @@ export default function ContentPage(props: ContentProps) {
 				</p>
 			</button></div>
 
-                <DataGrid
-                  rows={filesRows}
-                  columns={tableHead}
-                />
-				{/*<table>
+				<table>
 					<thead>
 						<tr>
 							{selectOn && (<td>Select</td>)}
@@ -113,7 +86,7 @@ export default function ContentPage(props: ContentProps) {
 					)
 					)}
 					</tbody>
-				</table>*/}
+				</table>
 			</div>
 		</>
 	);

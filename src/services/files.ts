@@ -1,4 +1,5 @@
 interface FileList {
+    // NOTE: the `link` and `metadata` are NOT returned by firebase, you have to call another function to get them, that's why we have promises here
     storedFiles: Array<{
         name: string,
         link: Promise<string>,
@@ -7,7 +8,7 @@ interface FileList {
     zipped: Array<{
         name: string,
         link: Promise<string>,
-        meta: Promise<{
+        meta: Promise<{ // it has much more data, we only listed the ones we are using
             size: number,
             timeCreated: string,
             updated: string
@@ -15,6 +16,16 @@ interface FileList {
     }>
 }
 
+/**
+ * Gets List of files
+ * 
+ * @param storageRef It is a reference to the firebase storage
+ * > How does it know which storage to chose ?
+ * > We have to give it in a firebase.json file, look in the config/firebase.json file
+ * 
+ * 
+ * @returns {Promise<FileList>} a promise object, containing array of all files
+ */
 export function GetListService(storageRef: firebase.storage.Reference): Promise<FileList> {
     return new Promise((resolve, reject) => {
         try{

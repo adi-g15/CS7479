@@ -2,6 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import byteSize from "byte-size";
 import "../styles/pdf_down.css";
 
+/**
+ * The file object, we get from firebase looks like this
+ * 
+ * NOTE-  the `link` and `metadata` are NOT returned by firebase, you have to call another function to get them, that's why we have promises here
+ */
 interface ZipProps {
     name: string,
     linkPromise: Promise<string>,
@@ -9,7 +14,7 @@ interface ZipProps {
     gridWidth?: [number, number]
 };
 
-export default function PdfDown(props: ZipProps) {
+export default function UnitZip(props: ZipProps) {
     const [link, setLink] = useState("?");
     const [size, setSize] = useState(0);
 
@@ -22,7 +27,7 @@ export default function PdfDown(props: ZipProps) {
     return (
         <div className="unit_zip" style={ props.gridWidth ? {gridColumnStart: props.gridWidth[0], gridColumnEnd: props.gridWidth[1]} : {} }>
             <button
-				onClick={() => anchor.current.click()}
+				onClick={() => anchor.current?.click()}
 				disabled={link === '?'}
 			>
 				<a download href={link} ref={anchor}>

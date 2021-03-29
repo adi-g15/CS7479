@@ -2,6 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import byteSize from "byte-size";
 import "../styles/pdf_down.css";
 
+/**
+ * The file object, we get from firebase looks like this
+ * 
+ * NOTE-  the `link` and `metadata` are NOT returned by firebase, you have to call another function to get them, that's why we have promises here
+ */
 interface PdfProps {
     name: string,
     linkPromise: Promise<string>,

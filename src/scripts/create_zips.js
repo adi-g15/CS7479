@@ -1,13 +1,5 @@
-cd ~
-# gsutil ls gs://assignment-7d2c8.appspot.com/cs4401/
-gsutil -m cp "Lecture*pdf" gs://assignment-7d2c8.appspot.com/cs4401/
-gsutil -m cp -r gs://assignment-7d2c8.appspot.com/cs4401 .
-cd cs4401
-zip -u CS4401_COA_All.zip Lecture*
-
-
-/// create_zips.js
-// Must be executed INSIDE the directory having these files
+// This and `cloud_shell_script.sh` will be in HOME directory of Cloud Shell
+// Tumko ye file execute karne ka jaroorat nahi hai, cloud_shell_script does it for you
 
 const SUB_CODE = 'CS4401_COA';
 
@@ -25,11 +17,3 @@ for(n in units) {
 
 	_a =exec(`zip -u ${SUB_CODE}_Unit_${n}.zip *"Unit ${n} -"*`, (err, stdout, stderr) => console.log(err,stdout, stderr))
 }
-
-/// END
-
-
-gsutil mv *.zip gs://assignment-7d2c8.appspot.com/cs4401/
-
-exit
-

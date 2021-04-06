@@ -1,6 +1,13 @@
 .vscode
 build
 
+# the pdf folder
+/cs4401
+
+# client_secret (credentials) and token
+/credentials.json
+/token.json
+
 # Logs
 logs
 *.log

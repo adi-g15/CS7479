@@ -74,7 +74,7 @@ def decrypt_file(filename):
     writer = PdfFileWriter()
     reader = PdfFileReader(file)
 
-    if reader.getIsEncrypted == False:
+    if reader.getIsEncrypted() == False:
         return
 
     reader.decrypt(password)

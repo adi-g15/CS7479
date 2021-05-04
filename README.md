@@ -2,6 +2,12 @@
 
 For the NITP 2k19-23 batch.
 
+> **NOTE** - Kyunki sir ne pdfs ka access hata diya hai, so the website will not show the pdfs now, saare pdfs hai abhi bhi, lekin agar aapko pdfs chahiye to message ya mail kardena (ag15035@gmail.com)
+>
+>            You can still deploy this branch, or the button below, and it will show the pdfs again 🙂
+
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/adi-g15/CS4401)
+
 Provides decrypted lecture notes, download and read, no need to always enter password.
 
 > See the `src/pages/index.tsx` file for code, it is the main code for the page you see at https://cs4401.netlify.app

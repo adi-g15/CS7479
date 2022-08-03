@@ -1,0 +1,25 @@
+name: Auto Decrypter
+
+on:
+  schedule:
+    - cron: 30 */4 * * * # Run every 4 hours starting from, 5:30 AM Indian Standard Time
+  push:
+    branches: [ "main" ]
+
+env:
+  GDRIVETOKEN: ${{ secrets.GDRIVETOKEN }}
+  PASSWD: ${{ secrets.PASSWD }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Install dependencies
+      run: pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib PyPDF3
+    - name: Run decrypt
+      run: python decrypt.py

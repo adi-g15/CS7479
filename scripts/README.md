@@ -1,7 +1,10 @@
 ## Scripts to automate decrypting
 
 > ### **[DEPRECATED]**
-> See `code.py` for a single script capable of automating everything, from fetching pdfs from google drive, decrypting, and uploading to google cloud bucket
+>
+> Repository ke start page wala README dekho
+>
+> See `decrypt.py` and `code.py` for a single script capable of automating everything, from fetching pdfs from google drive, decrypting, and uploading to google cloud bucket
 
 This was the original way in which...
 

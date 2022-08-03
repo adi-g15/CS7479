@@ -7,7 +7,7 @@
 > 1. pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib PyPDF3
 > 2. Go to https://console.cloud.google.com/apis/credentials/ and create an OAuth key, download it as json, copy in this folder and rename as 'credentials.json
 
-1. Run `PASSWD="nitp!cs7479@Atmn22" python decrypt.py`
+1. Run `python decrypt.py`
 2. Chose nit patna email id (ie. the email id that has access to the files)
 
 """
@@ -19,6 +19,7 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from PyPDF3 import PdfFileReader, PdfFileWriter
 import re
+from os import environ as env
 
 file_name_regex = re.compile(r"^Lecture \d+.*\.pdf$")
 drive_folder_name = "Lecture Handouts"  # jis folder me encrypted pdfs hai (in google drive)
@@ -71,19 +72,28 @@ def decrypt_file(filename):
     os.rename(new_filename, filename)
 
 def main():
-    if password == "":
-        print("[WARN] Password not set. Please set password in the code (password variable)")
+    if password == "" and env.get("PASSWD") is None:
+        print("[WARN] Password not set. Please set `password` in the code (or PASSWD environment variable)")
 
     # Isme hum credentials (ie. token, etc. received when you logged in your google account)
     creds = None
+
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
+
+    # NOTE: Can also pass content of token.json in environment variable: GDRIVETOKEN. token.json has higher precedence, if present
+    if os.path.exists('token.json') is False and env.get("GDRIVETOKEN") is not None:
+        gdrivetoken = env.get("GDRIVETOKEN")
+        with open("token.json", mode="w") as token_json:
+            token_json.write(gdrivetoken)
+
     if os.path.exists('token.json'):
         try:
             creds = Credentials.from_authorized_user_file('token.json', SCOPES)
         except ValueError:
             print("ValueError happened")
+
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:

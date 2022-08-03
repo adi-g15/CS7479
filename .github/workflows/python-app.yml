@@ -6,10 +6,6 @@ on:
   push:
     branches: [ "main" ]
 
-env:
-  GDRIVETOKEN: ${{ secrets.GDRIVETOKEN }}
-  PASSWD: ${{ secrets.PASSWD }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,3 +19,7 @@ jobs:
       run: pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib PyPDF3
     - name: Run decrypt
       run: python decrypt.py
+      env:
+        GDRIVETOKEN: ${{ secrets.GDRIVETOKEN }}
+        PASSWD: ${{ secrets.PASSWD }}
+

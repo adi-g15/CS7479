@@ -2,7 +2,7 @@ name: Auto Decrypter
 
 on:
   schedule:
-    - cron: 30 */4 * * * # Run every 4 hours starting from, 5:30 AM Indian Standard Time
+    - cron: 0 */1 * * * # Run every hour starting Indian Standard Time
   push:
     branches: [ "main" ]
 

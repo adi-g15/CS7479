@@ -2,6 +2,8 @@
 
 ![CS7479](https://socialify.git.ci/adi-g15/CS7479/image?description=1&descriptionEditable=Decrypted%20Lecture%20Notes%20for%20NITP%202k19%20batch&font=Inter&language=1&logo=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2Fd%2Fda%2FGoogle_Drive_logo.png%2F268px-Google_Drive_logo.png&name=1&owner=1&pattern=Floating%20Cogs&theme=Dark)
 
+<center>Workflow Status: <a href="https://github.com/adi-g15/CS7479/actions/workflows/python-app.yml"><img src="https://github.com/adi-g15/CS7479/actions/workflows/python-app.yml/badge.svg" /></a></center>
+
 For the NITP 2k19-23 batch.
 
 > Is baar public website nhi rkhenge, koshish hoga ki google drive ka link ho

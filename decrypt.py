@@ -72,8 +72,12 @@ def decrypt_file(filename):
     os.rename(new_filename, filename)
 
 def main():
-    if password == "" and env.get("PASSWD") is None:
-        print("[WARN] Password not set. Please set `password` in the code (or PASSWD environment variable)")
+    global password
+    if password == "":
+        if env.get("PASSWD") is not None:
+            password = env.get("PASSWD")
+        else:
+            print("[WARN] Password not set. Please set `password` in the code (or PASSWD environment variable)")
 
     # Isme hum credentials (ie. token, etc. received when you logged in your google account)
     creds = None
@@ -103,7 +107,9 @@ def main():
                 flow = InstalledAppFlow.from_client_secrets_file(
                     'credentials.json', SCOPES)
             except FileNotFoundError:
-                print("credentials.json file not found... \nGo to https://console.cloud.google.com/apis/credentials/ and create an OAuth key, download it as json, and rename as 'credentials.json'")
+                print("credentials.json file not found...")
+                print("Go to https://console.cloud.google.com/apis/credentials/ and create an OAuth key, download it as json, and rename as 'credentials.json'")
+                return
             creds = flow.run_local_server(port=55000)
         # Save the credentials for the next run
         with open('token.json', 'w') as token:

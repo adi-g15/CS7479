@@ -1,13 +1,16 @@
 #!/usr/bin/python3
 
-# Is file se ab automatically drive ka lecture handouts folder se download karke decrypt karlega ye files ko
-# So you won't need to go to https://cs4401.netlify.app and check drive's folder, no need now :D
-# Aur ye baar baar same file ko download/decrypt bhi nhi karega
+"""
+# Steps to use:
 
-# Steps to use (ONE TIME):
-# 1. https://console.cloud.google.com/apis/credentials/ and create an OAuth key, download it as json, and rename as 'credentials.json
-# 2. Run `python simple_decrypt.py`
-# 3. Chose nit patna email id (ie. the email id that has access to the files)
+> ## Pehli baar ye steps bhi krna hoga:
+> 1. pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib PyPDF3
+> 2. Go to https://console.cloud.google.com/apis/credentials/ and create an OAuth key, download it as json, copy in this folder and rename as 'credentials.json
+
+1. Run `PASSWD="nitp!cs7479@Atmn22" python decrypt.py`
+2. Chose nit patna email id (ie. the email id that has access to the files)
+
+"""
 
 import os.path
 from googleapiclient.discovery import build
@@ -16,16 +19,14 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from PyPDF3 import PdfFileReader, PdfFileWriter
 import re
-import os
-
-# Ye run karna hai before running this script
-# pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib PyPDF3
 
 file_name_regex = re.compile(r"^Lecture \d+.*\.pdf$")
-drive_folder_name = "Lecture Handouts"
-drive_folder_name_decrypted = drive_folder_name + " Decrypted"
-your_folder_name  = "cs7479"    # jis folder me pdfs save hoga (decrypted)
-password = "nitp!cs7479@Atmn22"   # or any other password your notes has
+drive_folder_name = "Lecture Handouts"  # jis folder me encrypted pdfs hai (in google drive)
+drive_folder_name_decrypted = drive_folder_name + " Decrypted" # jis folder me pdfs save honge (in google drive)
+your_folder_name  = "cs7479"            # jis folder me pdfs save hoga (decrypted, local)
+
+# To make it simpler, directly add password here
+password = ""
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = [
@@ -36,7 +37,7 @@ SCOPES = [
 
 def printdebug(*argv):
     i=0
-    print("[DEBUG]: ", argv);
+    #print("\n[DEBUG]: ", argv, "\n");
 
 def decrypted_file_exists(fname):
     if os.path.isfile(fname):
@@ -70,6 +71,9 @@ def decrypt_file(filename):
     os.rename(new_filename, filename)
 
 def main():
+    if password == "":
+        print("[WARN] Password not set. Please set password in the code (password variable)")
+
     # Isme hum credentials (ie. token, etc. received when you logged in your google account)
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
@@ -130,7 +134,7 @@ def main():
 
     # Now we fetch list of all files inside the folder
     results = service.files().list(
-        q=f"mimeType='application/pdf' and '{notes_folder_id}' in parents and name = '{drive_folder_name}'",
+        q=f"mimeType='application/pdf' and '{notes_folder_id}' in parents",
         pageSize=50, fields="nextPageToken, files(id, name)").execute()
     items = results.get('files', [])
 
@@ -149,7 +153,7 @@ def main():
             decrypt_file(item['name'])
         else:
             # The file may have been something other the Lecture pdf
-            print(f"Skipping {item['name']}")
+            print(f"Skipping {item['name']}. Already downloaded or not a lecture pdf")
 
     # Uploading decrypted files
     if decrypted_notes_folder_id is None:
@@ -167,15 +171,13 @@ def main():
         print("Remote google drive folder already exists. Continuing...")
 
     already_uploaded_files = service.files().list(
-        q=f"mimeType='application/pdf' and '{decrypted_notes_folder_id}' in parents and name contains '{drive_folder_name_decrypted}'",
+        q=f"mimeType='application/pdf' and '{decrypted_notes_folder_id}' in parents",
         pageSize=50, fields="nextPageToken, files(id, name)").execute().get('files', [])
 
     printdebug("already_uploaded_files: ", already_uploaded_files)
 
-    printdebug("items: ", items)
     # iterate over all files in current directory
     for file in os.listdir():
-        print(file)
         request = service.files().create(
             body={
                 'name': file,
@@ -202,6 +204,8 @@ def main():
         if found == False:
             print(f"Uploading {file}")
             request.execute()
+        else:
+            print(f"Skipping {file}. Already uploaded")
 
 if __name__ == '__main__':
     main()

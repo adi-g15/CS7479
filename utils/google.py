@@ -83,7 +83,7 @@ def upload_file(service, parent_folder_id, file_name):
             'name': file_name,
             'mimeType': MIMETYPES['PDF'],
             'parents': [parent_folder_id],
-            'description': f"Decrypted version of the lecture file {file}",
+            'description': f"Decrypted version of the lecture file {file_name}",
                 #'isAppAuthorized': True,
                 #'ownedByMe': True,
                 #'capabilities': {

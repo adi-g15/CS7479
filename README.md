@@ -3,6 +3,7 @@
 ![CS7479](https://socialify.git.ci/adi-g15/CS7479/image?description=1&descriptionEditable=Decrypted%20Lecture%20Notes%20for%20NITP%202k19%20batch&font=Inter&language=1&logo=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2Fd%2Fda%2FGoogle_Drive_logo.png%2F268px-Google_Drive_logo.png&name=1&owner=1&pattern=Floating%20Cogs&theme=Dark)
 
 <div align="center">
+  <a href="https://www.codacy.com/gh/adi-g15/CS7479/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=adi-g15/CS7479&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/d3cf8bb2841c433d9490943c7921e271"/></a>
   <a href="https://github.com/adi-g15/CS7479/actions/workflows/python-app.yml"><img src="https://github.com/adi-g15/CS7479/actions/workflows/python-app.yml/badge.svg" /></a>
   <a href="https://www.codefactor.io/repository/github/adi-g15/cs7479/overview/main"><img src="https://www.codefactor.io/repository/github/adi-g15/cs7479/badge/main" alt="CodeFactor" /></a>
 </div>
@@ -38,4 +39,3 @@ All of this is automated, see the `decrypt.py` file for more details and comment
 > TIP: scripts/ folder me kuchh aur mast cheeze hai, eg. uploading to a google cloud storage bucket
 
 Made for anyone who wishes to make something easier for all :D
-

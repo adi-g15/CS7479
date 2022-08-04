@@ -75,7 +75,7 @@ def main():
             with open(item['name'], mode="wb") as fout:
                 fout.write(result)
 
-            decrypt_pdf(item['name'])
+            decrypt_pdf(item['name'], password)
         else:
             # The file may have been something other the Lecture pdf
             print(f"Info: Skipping {item['name']}. Already downloaded or not a lecture pdf")

@@ -1,4 +1,5 @@
-.vscode
+__pycache__
+.vscoe
 build
 
 # the pdf folder

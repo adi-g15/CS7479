@@ -37,8 +37,8 @@ SCOPES = [
     'https://www.googleapis.com/auth/drive.install']
 
 def printdebug(*argv):
-    i=0
-    #print("\n[DEBUG]: ", argv, "\n");
+    if env.get("APP_DEBUG") is not None:
+        print("\n[DEBUG]: ", argv, "\n");
 
 def decrypted_file_exists(fname):
     if os.path.isfile(fname):

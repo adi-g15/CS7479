@@ -22,4 +22,5 @@ jobs:
       env:
         GDRIVETOKEN: ${{ secrets.GDRIVETOKEN }}
         PASSWD: ${{ secrets.PASSWD }}
+        APP_DEBUG: true
 

@@ -68,7 +68,7 @@ def main():
         # .get_media() provides us with a request to download the file
         request = service.files().get_media(fileId=item['id'])
 
-        if (file_name_regex.match(item['name']) != None) and not decrypted_pdf_exists(item['name']):
+        if (file_name_regex.match(item['name']) is not None) and not decrypted_pdf_exists(item['name']):
             print(f"Info: Downloading {item['name']}")
             result = request.execute()
 
@@ -100,11 +100,12 @@ def main():
                 found = True
                 break
 
-        if found == False:
+        if found is False:
             print(f"Uploading {file}")
             upload_file(service, decrypted_notes_folder_id, file)
         else:
             print(f"Skipping {file}. Already uploaded")
+
 
 def printdebug(*argv):
     if env.get("APP_DEBUG") is not None:

@@ -129,11 +129,18 @@ def main():
 
     # NOTE: Ignores any other file in the current directory
     for file in lecture_files:
-        if file in already_uploaded_files:
-            print(f"Info: Skipping {file}. Already uploaded")
-        else:
+        uploaded_file = findElement(remote_files, file)
+        should_upload = True
+        existing_fileid = None
+        if uploaded_file is not None:
+            existing_fileid = uploaded_file["id"]
+            should_upload = (uploaded_file["md5Checksum"] != md5sum(file))
+
+        if should_upload:
             print(f"Info: Uploading {file}")
-            upload_file(service, decrypted_notes_folder_id, file)
+            upload_file(service, decrypted_notes_folder_id, file, existing_fileid)
+        else:
+            print(f"Info: Skipping {file}. Already uploaded")
 
 def printdebug(*argv):
     if env.get("APP_DEBUG") is not None:

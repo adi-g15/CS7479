@@ -82,7 +82,6 @@ def upload_file(service, parent_folder_id, file_name, existing_fileid=None):
         request = service.files().update(
             body={
                 'mimeType': MIMETYPES['PDF'],
-                'parents': [parent_folder_id],
                 'description': f"Decrypted version of the lecture file {file_name}",
                 'uploadType': "multipart",
             },

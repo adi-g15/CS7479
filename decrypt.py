@@ -13,12 +13,13 @@
 
 """
 
-from utils.pdf import decrypted_pdf_exists, decrypt_pdf
+from utils.pdf import decrypted_pdf_exists, decrypt_pdf, merge_pdfs
 from utils.google import get_authorization_cred, create_folder, get_folder_id, get_files, upload_file
 from utils.config import *
 from googleapiclient.discovery import build as BuildService
 import os
 from os import environ as env
+import hashlib
 
 """
 To edit variables such as password, folder names, etc. edit utils/config.py
@@ -92,11 +93,35 @@ def main():
     else:
         print("AlreadyExists: Remote google drive folder already exists. Continuing...")
 
-    # Uploading lecture files
+    # Get existing files in the google drive decrypted folder
     remote_files = get_files(service, decrypted_notes_folder_id)
     printdebug("remote_files: ", remote_files)
 
+    # Merge and upload lecture files into a `merged_notes_fname`
+    lecture_files = [item["name"] for item in items]
+
+    # Required to make sure the order is correct
+    lecture_files.sort()
+
+    printdebug("lecture_files: ", lecture_files)
+    merge_pdfs(lecture_files, merged_notes_fname)
+    uploaded_combined_notes = findElement(remote_files, merged_notes_fname)
+
+    should_upload = True
+    if uploaded_combined_notes is not None:
+        # Check if our local file is the same as the one already uploaded
+        should_upload = (uploaded_combined_notes["md5Checksum"] != md5sum(merged_notes_fname))
+        printdebug("md5sum: ", md5sum(merged_notes_fname))
+
+    if should_upload:
+        printdebug("Uploading `merged_notes_fname`: ", os.path.abspath(merged_notes_fname))
+        upload_file(service, decrypted_notes_folder_id, merged_notes_fname)
+    else:
+        print("AlreadyExists: Same `merged_notes_fname` already exists. Continuing...")
+
+    # Uploading lecture files
     already_uploaded_files = [item['name'] for item in remote_files]
+    printdebug("already_uploaded_files: ", already_uploaded_files)
 
     # NOTE: Ignores any other file in the current directory
     for file in lecture_files:
@@ -109,6 +134,17 @@ def main():
 def printdebug(*argv):
     if env.get("APP_DEBUG") is not None:
         print("\n[DEBUG]: ", argv, "\n")
+
+def findElement(items, name):
+    for item in items:
+        if item['name'] == name:
+            return item
+    return None
+
+# ref: https://stackoverflow.com/a/16876405/12339402
+def md5sum(filename):
+    with open(filename, 'rb') as f:
+        return hashlib.md5(f.read()).hexdigest()
 
 if __name__ == '__main__':
     main()

@@ -72,7 +72,7 @@ def get_folder_id(service, folder_name):
 def get_files(service, folder_id):
     request = service.files().list(
         q=f"mimeType='{MIMETYPES['PDF']}' and '{folder_id}' in parents",
-        pageSize=50, fields="nextPageToken, files(id, name)")
+        pageSize=50, fields="nextPageToken, files(id, name, md5Checksum)")
 
     return request.execute().get('files', [])
 

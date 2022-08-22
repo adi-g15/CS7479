@@ -3,6 +3,9 @@ import re
 # Regex to filter Lecture pdfs
 file_name_regex = re.compile(r"^Lecture \d+.*\.pdf$")
 
+# Merged Notes filename
+merged_notes_fname = "CombinedNotes.pdf"
+
 # jis folder me encrypted pdfs hai (in google drive)
 drive_folder_name = "Lecture Handouts"
 

@@ -35,3 +35,16 @@ def decrypt_pdf(filename, password):
     os.remove(filename)
     os.rename(tmp_filename, filename)
 
+def merge_pdfs(files, merged_name):
+    print("Merging PDFs...", files)
+
+    writer = PdfFileWriter()
+    
+    for file in files:
+        reader = PdfFileReader(open(file, "rb"))
+        for page in reader.pages:
+            writer.addPage(page)
+
+    with open(merged_name, "wb") as merged_file:
+        writer.write(merged_file)
+

@@ -92,24 +92,19 @@ def main():
     else:
         print("AlreadyExists: Remote google drive folder already exists. Continuing...")
 
-    already_uploaded_files = get_files(service, decrypted_notes_folder_id)
-    printdebug("already_uploaded_files: ", already_uploaded_files)
+    # Uploading lecture files
+    remote_files = get_files(service, decrypted_notes_folder_id)
+    printdebug("remote_files: ", remote_files)
 
-    # NOTE: Instead of uploading only the remote available files, we are uploading all
-    # files in current directory
-    for file in os.listdir():
-        found = False
-        for uploaded_file in already_uploaded_files:
-            if uploaded_file['name'] == file:
-                found = True
-                break
+    already_uploaded_files = [item['name'] for item in remote_files]
 
-        if found is False:
-            print(f"Uploading {file}")
-            upload_file(service, decrypted_notes_folder_id, file)
+    # NOTE: Ignores any other file in the current directory
+    for file in lecture_files:
+        if file in already_uploaded_files:
+            print(f"Info: Skipping {file}. Already uploaded")
         else:
-            print(f"Skipping {file}. Already uploaded")
-
+            print(f"Info: Uploading {file}")
+            upload_file(service, decrypted_notes_folder_id, file)
 
 def printdebug(*argv):
     if env.get("APP_DEBUG") is not None:

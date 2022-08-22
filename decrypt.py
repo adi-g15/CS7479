@@ -20,6 +20,7 @@ from googleapiclient.discovery import build as BuildService
 import os
 from os import environ as env
 import hashlib
+from multiprocessing.pool import ThreadPool
 
 """
 To edit variables such as password, folder names, etc. edit utils/config.py
@@ -58,6 +59,11 @@ def main():
         print(f"NotFoundError: {drive_folder_name} not found, in your Google Drive")
         print("TIP: Can use the 'Add a shortcut to drive' option on the shared folder")
         return 1
+
+    # Create thread pool for multi-threading
+    # ref: https://stackoverflow.com/a/15143994/12339402
+    # ref: https://stackoverflow.com/a/15144765/12339402
+    pool = ThreadPool(10);
 
     # Now we fetch list of all files inside the folder
     items = get_files(service, notes_folder_id)
@@ -119,7 +125,7 @@ def main():
 
     if should_upload:
         printdebug(f"Uploading {merged_notes_fname}: ", os.path.abspath(merged_notes_fname))
-        upload_file(service, decrypted_notes_folder_id, merged_notes_fname, existing_fileid)
+        pool.apply_async(upload_file, (service, decrypted_notes_folder_id, merged_notes_fname, existing_fileid));
     else:
         print(f"AlreadyExists: Same {merged_notes_fname} already exists. Continuing...")
 
@@ -138,9 +144,12 @@ def main():
 
         if should_upload:
             print(f"Info: Uploading {file}")
-            upload_file(service, decrypted_notes_folder_id, file, existing_fileid)
+            pool.apply_async(upload_file, (service, decrypted_notes_folder_id, file, existing_fileid));
         else:
             print(f"Info: Skipping {file}. Already uploaded")
+
+    pool.close()
+    pool.join()
 
 def printdebug(*argv):
     if env.get("APP_DEBUG") is not None:

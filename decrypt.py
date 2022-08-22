@@ -108,16 +108,20 @@ def main():
     uploaded_combined_notes = findElement(remote_files, merged_notes_fname)
 
     should_upload = True
+    existing_fileid = None
     if uploaded_combined_notes is not None:
+        # Since the file already exists, we need to replace, in case it is uploaded
+        existing_fileid = uploaded_combined_notes["id"]
+
         # Check if our local file is the same as the one already uploaded
         should_upload = (uploaded_combined_notes["md5Checksum"] != md5sum(merged_notes_fname))
         printdebug("md5sum: ", md5sum(merged_notes_fname))
 
     if should_upload:
-        printdebug("Uploading `merged_notes_fname`: ", os.path.abspath(merged_notes_fname))
-        upload_file(service, decrypted_notes_folder_id, merged_notes_fname)
+        printdebug(f"Uploading {merged_notes_fname}: ", os.path.abspath(merged_notes_fname))
+        upload_file(service, decrypted_notes_folder_id, merged_notes_fname, existing_fileid)
     else:
-        print("AlreadyExists: Same `merged_notes_fname` already exists. Continuing...")
+        print(f"AlreadyExists: Same {merged_notes_fname} already exists. Continuing...")
 
     # Uploading lecture files
     already_uploaded_files = [item['name'] for item in remote_files]

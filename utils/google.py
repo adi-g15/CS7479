@@ -77,23 +77,35 @@ def get_files(service, folder_id):
     return request.execute().get('files', [])
 
 # Upload file with given filepath, inside given folder
-def upload_file(service, parent_folder_id, file_name):
-    request = service.files().create(
-        body={
-            'name': file_name,
-            'mimeType': MIMETYPES['PDF'],
-            'parents': [parent_folder_id],
-            'description': f"Decrypted version of the lecture file {file_name}",
+def upload_file(service, parent_folder_id, file_name, existing_fileid=None):
+    if existing_fileid is not None:
+        request = service.files().update(
+            body={
+                'mimeType': MIMETYPES['PDF'],
+                'parents': [parent_folder_id],
+                'description': f"Decrypted version of the lecture file {file_name}",
+                'uploadType': "multipart",
+                'fileId': existing_fileid
+            },
+            media_body=file_name
+        )
+    else:
+        request = service.files().create(
+            body={
+                'name': file_name,
+                'mimeType': MIMETYPES['PDF'],
+                'parents': [parent_folder_id],
+                'description': f"Decrypted version of the lecture file {file_name}",
                 #'isAppAuthorized': True,
                 #'ownedByMe': True,
                 #'capabilities': {
                 #    "canShare": True,
                 #},
             },
-        #enforceSingleParent = True,
-        #useContentAsIndexableText = True,
-        media_body=file_name
-    )
+            #enforceSingleParent = True,
+            #useContentAsIndexableText = True,
+            media_body=file_name
+        )
 
     return request.execute()
 

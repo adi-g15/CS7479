@@ -61,6 +61,9 @@ def main():
     # Now we fetch list of all files inside the folder
     items = get_files(service, notes_folder_id)
 
+    # Filter out the Lecture Files (ie. those with .pdf extension and following file_name_regex)
+    items = [item for item in items if (file_name_regex.match(item['name']) is not None)]
+
     printdebug("items: ", items)
 
     # Iterate through all file names
@@ -68,7 +71,7 @@ def main():
         # .get_media() provides us with a request to download the file
         request = service.files().get_media(fileId=item['id'])
 
-        if (file_name_regex.match(item['name']) is not None) and not decrypted_pdf_exists(item['name']):
+        if not decrypted_pdf_exists(item['name']):
             print(f"Info: Downloading {item['name']}")
             result = request.execute()
 
@@ -78,7 +81,7 @@ def main():
             decrypt_pdf(item['name'], password)
         else:
             # The file may have been something other the Lecture pdf
-            print(f"Info: Skipping {item['name']}. Already downloaded or not a lecture pdf")
+            print(f"Info: Skipping {item['name']}. Already downloaded or decrypted")
 
     # Uploading decrypted files
     decrypted_notes_folder_id = get_folder_id(service, drive_folder_name_decrypted)
@@ -92,7 +95,8 @@ def main():
     already_uploaded_files = get_files(service, decrypted_notes_folder_id)
     printdebug("already_uploaded_files: ", already_uploaded_files)
 
-    # iterate over all files in current directory
+    # NOTE: Instead of uploading only the remote available files, we are uploading all
+    # files in current directory
     for file in os.listdir():
         found = False
         for uploaded_file in already_uploaded_files:

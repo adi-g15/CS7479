@@ -98,7 +98,8 @@ def main():
     printdebug("remote_files: ", remote_files)
 
     # Merge and upload lecture files into a `merged_notes_fname`
-    lecture_files = [item["name"] for item in items]
+    # Skip "Lecture 0 [*]" since it contains just syllabus, not required in CombinedNotes :)
+    lecture_files = [item["name"] for item in items if item["name"].startswith("Lecture 0 [")]
 
     # Required to make sure the order is correct
     lecture_files.sort()

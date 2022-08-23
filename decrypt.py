@@ -99,7 +99,7 @@ def main():
 
     # Merge and upload lecture files into a `merged_notes_fname`
     # Skip "Lecture 0 [*]" since it contains just syllabus, not required in CombinedNotes :)
-    lecture_files = [item["name"] for item in items if item["name"].startswith("Lecture 0 [")]
+    lecture_files = [item["name"] for item in items if not item["name"].startswith("Lecture 0 [")]
 
     # Required to make sure the order is correct
     lecture_files.sort()

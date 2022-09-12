@@ -19,6 +19,7 @@ from utils.config import *
 from googleapiclient.discovery import build as BuildService
 import os
 from os import environ as env
+from os import sys
 import hashlib
 
 """
@@ -143,6 +144,8 @@ def main():
         else:
             print(f"Info: Skipping {file}. Already uploaded")
 
+        return 0
+
 def printdebug(*argv):
     if env.get("APP_DEBUG") is not None:
         print("\n[DEBUG]: ", argv, "\n")
@@ -159,4 +162,8 @@ def md5sum(filename):
         return hashlib.md5(f.read()).hexdigest()
 
 if __name__ == '__main__':
-    main()
+    # Return with error code as returned by main
+    # (0 if no error, 1 if error)
+    # This helps fail the github action if anything went wrong
+    sys.exit( main() )
+

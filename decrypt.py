@@ -144,7 +144,7 @@ def main():
         else:
             print(f"Info: Skipping {file}. Already uploaded")
 
-        return 0
+    return 0
 
 def printdebug(*argv):
     if env.get("APP_DEBUG") is not None:

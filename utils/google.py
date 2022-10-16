@@ -28,7 +28,7 @@ def get_authorization_cred(scopes):
                                     'credentials.json', scopes
                                 ).run_local_server(port=55000)
 
-    if credential and not credential.valid and credential.expired and credential.refresh_token:
+    if credential and (not credential.valid) and credential.expired and credential.refresh_token:
         credential.refresh(Request())
 
     # If still credential not initialised/not found

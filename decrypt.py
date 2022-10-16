@@ -21,12 +21,16 @@ import os
 from os import environ as env
 from os import sys
 import hashlib
+from dotenv import load_dotenv
 
 """
 To edit variables such as password, folder names, etc. edit utils/config.py
 """
 
 def main():
+    # Load environment variables from .env file if present
+    load_dotenv()
+
     global password
     if password == "":
         if env.get("PASSWD") is not None:

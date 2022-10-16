@@ -22,7 +22,13 @@ There are in-code comments, for any further issue/\`any\` doubt, create an issue
 
 This is totally automated to fetch new pdfs, decrypt and upload the files, with latest files added in the google drive folder.
 
-This command handles it : 
+First install dependencies:
+
+```sh
+pip3 install google-api-python-client google-auth-httplib2 google-auth-oauthlib PyPDF3 dotenv
+```
+
+Then : 
 
 ```sh
 python3 decrypt.py

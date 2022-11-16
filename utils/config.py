@@ -5,6 +5,7 @@ file_name_regex = re.compile(r"^Lecture \d+.*\.pdf$")
 
 # Merged Notes filename
 merged_notes_fname = "CombinedNotes.pdf"
+merged_notes_fname_slides = "CombinedNotes.slides.pdf"
 
 # jis folder me encrypted pdfs hai (in google drive)
 drive_folder_name = "Lecture Handouts"

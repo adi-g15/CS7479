@@ -13,9 +13,13 @@
 
 """
 
+# If you see some unknown variable which is not defined here, it's probably
+# defined in utils/config.py
+
 from utils.pdf import decrypted_pdf_exists, decrypt_pdf, merge_pdfs
 from utils.google import get_authorization_cred, create_folder, get_folder_id, get_files, upload_file
 from utils.config import *
+from utils.lecture_specific import alag_pdf
 from googleapiclient.discovery import build as BuildService
 import os
 from os import environ as env
@@ -111,8 +115,15 @@ def main():
 
     printdebug("lecture_files: ", lecture_files)
     merge_pdfs(lecture_files, merged_notes_fname)
-    uploaded_combined_notes = findElement(remote_files, merged_notes_fname)
 
+    # Create a .slides version of the merged pdf
+    alag_pdf(merged_notes_fname, merged_notes_fname_slides)
+
+    uploaded_combined_notes = findElement(remote_files, merged_notes_fname)
+    uploaded_slides = findElement(remote_files, merged_notes_fname_slides)
+    existing_fileid_slides = uploaded_slides['id'] if uploaded_slides is not None else None
+
+    # Using same should_upload variable for both files, as if one is to be uploaded, the other should be too
     should_upload = True
     existing_fileid = None
     if uploaded_combined_notes is not None:
@@ -124,8 +135,10 @@ def main():
         printdebug("md5sum: ", md5sum(merged_notes_fname))
 
     if should_upload:
-        printdebug(f"Uploading {merged_notes_fname}: ", os.path.abspath(merged_notes_fname))
+        printdebug(f"Uploading {merged_notes_fname} ({os.path.abspath(merged_notes_fname)}), and {merged_notes_fname_slides} ({os.path.abspath(merged_notes_fname_slides)})")
         upload_file(service, decrypted_notes_folder_id, merged_notes_fname, existing_fileid)
+        upload_file(service, decrypted_notes_folder_id,
+                    merged_notes_fname_slides, existing_fileid_slides)
     else:
         print(f"AlreadyExists: Same {merged_notes_fname} already exists. Continuing...")
 

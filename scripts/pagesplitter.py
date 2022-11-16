@@ -1,44 +1,22 @@
 #!/bin/python
 
-from os import unlink, path
-from shutil import copyfile
-from PyPDF3 import PdfFileReader, PdfFileWriter
+# Import from parent directory: https://www.geeksforgeeks.org/python-import-from-parent-directory/
+import sys
 
-def alag_pdf(pdf_name, out_name):
-    f = open(pdf_name, "rb")
-    reader1 = PdfFileReader(f)
+# Add scripts directory in parent directory to path
+sys.path.append("../utils")
 
-    copyfile(pdf_name, pdf_name+".tmp")
+from lecture_specific import alag_pdf
 
-    reader2 = PdfFileReader(open(pdf_name+".tmp", "rb"))
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) < 2:
+        print("Usage: python pagesplitter.py input.pdf [output.pdf]")
+        sys.exit(1)
 
-    if path.exists(out_name):
-        unlink(out_name)
+    # If output file is same as input file, it will be modified in place
+    if len(sys.argv) == 2:
+        alag_pdf(sys.argv[1], sys.argv[1])
+    else:
+        alag_pdf(sys.argv[1], sys.argv[2])
 
-    outfile = open(out_name, "wb")
-
-    w,h = reader1.getPage(0).mediaBox.upperRight
-
-    out = PdfFileWriter()
-
-    for i in range(len(reader1.pages)):
-        p1 = reader1.getPage(i)
-        p1.trimBox.upperRight = (w-25, h-75)
-        p1.cropBox.upperRight = (w-25, h-75)
-        p1.trimBox.lowerLeft = (25, h/2+80/4+5)
-        p1.cropBox.lowerLeft = (25, h/2+80/4+5)
-        out.addPage(p1)
-
-        # We require a duplicate, else f.getPage(i) just gives us same object, so it
-        # is modified twice, and both pages become same (try it if in doubt)
-        p2 = reader2.getPage(i)
-        p2.trimBox.lowerLeft = (25,80)
-        p2.cropBox.lowerLeft = (25,80)
-        p2.trimBox.upperRight = (w-25,h/2-80/4)
-        p2.cropBox.upperRight = (w-25,h/2-80/4)
-        out.addPage(p2)
-
-    out.write(outfile)
-
-    # Delete temporary duplicate
-    unlink(pdf_name+".tmp")

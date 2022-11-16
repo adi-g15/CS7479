@@ -114,6 +114,34 @@ def main():
     lecture_files.sort()
 
     printdebug("lecture_files: ", lecture_files)
+
+    # Uploading lecture files
+    already_uploaded_files = [item['name'] for item in remote_files]
+    printdebug("already_uploaded_files: ", already_uploaded_files)
+
+    atleast_one_file_changed = False
+
+    # NOTE: Ignores any other file in the current directory
+    for file in lecture_files:
+        uploaded_file = findElement(remote_files, file)
+        should_upload = True
+        existing_fileid = None
+        if uploaded_file is not None:
+            existing_fileid = uploaded_file["id"]
+            should_upload = (uploaded_file["md5Checksum"] != md5sum(file))
+
+        if should_upload:
+            print(f"Info: Uploading {file}")
+            atleast_one_file_changed = True
+
+            upload_file(service, decrypted_notes_folder_id, file, existing_fileid)
+        else:
+            print(f"Info: Skipping {file}. Already uploaded")
+
+    if atleast_one_file_changed is False:
+        print("Info: No file changed. Skipping CombinedNotes.pdf upload")
+        return 0
+
     merge_pdfs(lecture_files, merged_notes_fname)
 
     # Create a .slides version of the merged pdf
@@ -141,25 +169,6 @@ def main():
                     merged_notes_fname_slides, existing_fileid_slides)
     else:
         print(f"AlreadyExists: Same {merged_notes_fname} already exists. Continuing...")
-
-    # Uploading lecture files
-    already_uploaded_files = [item['name'] for item in remote_files]
-    printdebug("already_uploaded_files: ", already_uploaded_files)
-
-    # NOTE: Ignores any other file in the current directory
-    for file in lecture_files:
-        uploaded_file = findElement(remote_files, file)
-        should_upload = True
-        existing_fileid = None
-        if uploaded_file is not None:
-            existing_fileid = uploaded_file["id"]
-            should_upload = (uploaded_file["md5Checksum"] != md5sum(file))
-
-        if should_upload:
-            print(f"Info: Uploading {file}")
-            upload_file(service, decrypted_notes_folder_id, file, existing_fileid)
-        else:
-            print(f"Info: Skipping {file}. Already uploaded")
 
     return 0
 
